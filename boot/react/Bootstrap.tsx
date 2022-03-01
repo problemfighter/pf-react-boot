@@ -6,7 +6,7 @@ import "./assets/css/toast.css"
 import "./assets/css/loading-indicator.css"
 
 function Bootstrap(props: any) {
-    return (<React.Fragment>{props.children}</React.Fragment>)
+    return (<>{props.children}</>)
 }
 
 export default Bootstrap;

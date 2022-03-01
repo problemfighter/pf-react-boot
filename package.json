@@ -12,9 +12,8 @@
     "typescript": "^4.6.2"
   },
   "scripts": {
-    "start-sm40": "webpack-dev-server",
-    "build-sm40": "webpack --mode=production",
-    "dev-build-sn40": "webpack --mode=production"
+    "start-react-boot": "webpack-dev-server",
+    "build-react-boot": "webpack --mode=production"
   },
   "eslintConfig": {
     "extends": [
