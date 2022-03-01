@@ -6,6 +6,7 @@ import TableRow from "../../react/table/TableRow";
 import TableHeadCell from "../../react/table/TableHeadCell";
 import TableBody from "../../react/table/TableBody";
 import TableCell from "../../react/table/TableCell";
+import Pagination from "../../react/Pagination";
 
 
 export default class TableComponent extends PFBSReactComponent<any, any> {
@@ -45,6 +46,9 @@ export default class TableComponent extends PFBSReactComponent<any, any> {
                         </TableRow>
                     </TableBody>
                 </Table>
+
+                {/*Need to fix the pagination*/}
+                <Pagination currentPage={10} itemPerPage={20} totalPage={500}/>
             </Container>
         );
     }
