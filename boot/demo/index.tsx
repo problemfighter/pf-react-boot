@@ -5,7 +5,6 @@ import BootstrapComponent from "./bootstrap/bootstrap-component";
 
 ReactDOM.render(
     <React.Fragment>
-        <h1>Bootstrap Demo</h1>
         <BootstrapComponent/>
     </React.Fragment>
     ,

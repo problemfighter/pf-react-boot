@@ -96,7 +96,11 @@ export default class TextField extends TextFieldSpec<Props, State> {
             id={_props.id}
             className={className}
             onBlur={_props.onBlur}
-            onChange={onChange}
+            onChange={(event: any) => {
+                if (onChange) {
+                    onChange(event)
+                }
+            }}
             onFocus={_props.onFocus}
             onKeyDown={_props.onKeyDown}
             onKeyUp={_props.onKeyUp}
@@ -176,12 +180,12 @@ export default class TextField extends TextFieldSpec<Props, State> {
     render() {
         const _props = this.props;
         let content = (
-            <React.Fragment>
+            <>
                 {this.getInput()}
                 {InputViewHelper.getErrorContent(_props)}
                 {InputViewHelper.getSuccessContent(_props)}
                 {InputViewHelper.getHelperContent(_props)}
-            </React.Fragment>
+            </>
         );
         return this.getWrapper(content);
     }
