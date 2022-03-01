@@ -15,4 +15,8 @@ build/
 
 .idea
 *.sqlite
+node_modules
+*.lock
+*.log
+.vscode
 

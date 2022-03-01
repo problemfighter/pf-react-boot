@@ -1,0 +1,64 @@
+import React from "react";
+import {InputViewHelper} from "./common/input-view-helper";
+import DropdownSpec, {DropdownProps} from "@pfo/pf-boot-spec/boot/spec/DropdownSpec";
+import {PFUIState} from "@pfo/pf-boot-spec/boot/spec/common/spec-common-things";
+
+interface Props extends DropdownProps {
+
+}
+
+class State implements PFUIState {
+}
+
+export default class Dropdown extends DropdownSpec<Props, State> {
+
+    static defaultProps = {
+        wrapperTagName: "ul",
+        itemTagName: "li",
+    }
+
+    private onClickItem(item: any, key: any) {
+        if (this.props.itemOnClick) {
+            this.props.itemOnClick(item, key, this.props.itemList)
+        }
+    }
+
+    private getItemView(item: any, key: any, itemTagName: any, itemLoopCallBack: any) {
+        let itemView = item
+        if (itemLoopCallBack) {
+            itemView = itemLoopCallBack(item, key)
+        }
+        let ItemTagName: any = itemTagName
+        let className = InputViewHelper.concatClass(InputViewHelper.getClass(this.props.itemClassName), "dropdown-item")
+        return (
+            <ItemTagName onClick={(event: any) => this.onClickItem(item, key)} key={key} id={this.props.itemId} className={className}>
+                {itemView}
+            </ItemTagName>
+        )
+    }
+
+
+    render() {
+        const _this = this;
+        const _props = this.props;
+        const {wrapperPlaceholder, itemList, itemLoopCallBack} = _props
+        const WrapperTagName: any = _props.wrapperTagName
+        const itemTagName: any = _props.itemTagName
+        let className = InputViewHelper.concatClass(InputViewHelper.getClass(this.props.wrapperClassName), "dropdown-menu")
+        return (
+            <div className="dropdown">
+                <span data-bs-toggle="dropdown">
+                    {wrapperPlaceholder}
+                </span>
+                <WrapperTagName className={className} id={this.props.wrapperId}>
+                    {itemList.map(
+                        (item: any, key: any) => (
+                            _this.getItemView(item, key, itemTagName, itemLoopCallBack)
+                        ))
+                    }
+                </WrapperTagName>
+            </div>
+        );
+    }
+
+}
