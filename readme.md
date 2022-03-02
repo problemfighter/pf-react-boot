@@ -9,6 +9,12 @@ Bootstrap React Implementation by Problem Fighter
 **Please find [the Documentation]() with example from [hmtmcse.com]()**
 
 
+### Kill node process at windows
+```bash
+Taskkill /F /IM node.exe
+```
+
+
 <br/><br/><br/>
 ## Donate
 [Problem Fighter](https://www.problemfighter.com/) develops and supports PFReactBoot and the libraries it uses. In order to grow
