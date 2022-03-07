@@ -11,6 +11,7 @@ export type LabelType =
 
 interface Props extends LabelProps {
     type?: LabelType
+    labelClass?: string
 }
 
 class State implements PFUIState {
@@ -31,6 +32,9 @@ export default class Label extends LabelSpec<Props, State> {
             case "switch":
                 klass = "form-check-label"
                 break
+        }
+        if (this.props.labelClass) {
+            klass += " " + this.props.labelClass
         }
         return klass
     }

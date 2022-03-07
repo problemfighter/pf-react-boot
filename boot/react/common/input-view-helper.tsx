@@ -12,7 +12,7 @@ export class InputViewHelper {
         }
         if (props.label) {
             let type = props.type as LabelType
-            return (<Label type={type}>{requiredIndicator}{props.label}</Label>)
+            return (<Label type={type} labelClass={props.labelClass}>{requiredIndicator}{props.label}</Label>)
         }
         return ""
     }
