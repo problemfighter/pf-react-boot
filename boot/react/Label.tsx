@@ -43,7 +43,7 @@ export default class Label extends LabelSpec<Props, State> {
         const _props = this.props;
         let klasses = (this.getMainClass() + (_props.className ? " " + _props.className : "")).trim();
         return (<label
-            {...CommonUtil.removePropsItem(_props, ['type'])}
+            {...CommonUtil.removePropsItem(_props, ['type', 'labelClass'])}
             className={klasses}
         >{_props.children}</label>);
     }
