@@ -180,6 +180,7 @@ export default class Select extends SelectSpec<Props, State> {
                 id={_props.id}
                 placeholder={_props.placeholder}
                 name={_props.name}
+                menuPlacement={"auto"}
             />
         );
         return this.wrapContent(select)

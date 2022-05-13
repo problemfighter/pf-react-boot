@@ -4,7 +4,7 @@ import PaginationSpec, {PaginationProps} from "@pfo/pf-boot-spec/boot/spec/Pagin
 import {PFUIState} from "@pfo/pf-boot-spec/boot/spec/common/spec-common-things";
 
 interface Props extends PaginationProps {
-
+    siblingCount?: number
 }
 
 class State implements PFUIState {
@@ -23,9 +23,12 @@ const options = [
     {value: 500, label: '500'},
 ]
 
+export const DOTS = '...';
 export default class Pagination extends PaginationSpec<Props, State> {
 
-    static defaultProps = {}
+    static defaultProps = {
+        siblingCount: 1
+    }
 
     state: State = new State();
 
@@ -42,34 +45,6 @@ export default class Pagination extends PaginationSpec<Props, State> {
                 itemPerPage: this.props.itemPerPage,
             })
         }
-    }
-
-    private getPaginationMatrix(currentPage: number, totalPage: number) {
-        let delta = 2
-        let left = currentPage - delta
-        let right = currentPage + delta + 1
-        let range = []
-        let rangeWithDots = []
-        let temp
-
-        for (let i = 1; i <= totalPage; i++) {
-            if (i === 1 || i === totalPage || (i >= left && i < right)) {
-                range.push(i);
-            }
-        }
-
-        for (let i of range) {
-            if (temp) {
-                if (i - temp === 2) {
-                    rangeWithDots.push(temp + 1);
-                } else if (i - temp !== 1) {
-                    rangeWithDots.push('...');
-                }
-            }
-            rangeWithDots.push(i);
-            temp = i;
-        }
-        return rangeWithDots
     }
 
     private getTotalPage() {
@@ -151,11 +126,61 @@ export default class Pagination extends PaginationSpec<Props, State> {
             })
     }
 
+    range(start: any, end: any) {
+        let length = end - start + 1;
+        return Array.from({length}, (_, idx) => idx + start);
+    }
+
+    calculatePagination() {
+        const totalPageCount = this.props.totalPage;
+        let siblingCount = 1
+        if (this.props.siblingCount) {
+            siblingCount = this.props.siblingCount
+        }
+
+        const totalPageNumbers = siblingCount + 5;
+        if (totalPageNumbers >= totalPageCount) {
+            return this.range(1, totalPageCount);
+        }
+
+        const leftSiblingIndex = Math.max(this.props.currentPage - siblingCount, 1);
+        const rightSiblingIndex = Math.min(this.props.currentPage + siblingCount, totalPageCount);
+
+        const shouldShowLeftDots = leftSiblingIndex > 2;
+        const shouldShowRightDots = rightSiblingIndex < totalPageCount - 2;
+
+        const firstPageIndex = 1;
+        const lastPageIndex = totalPageCount;
+
+        if (!shouldShowLeftDots && shouldShowRightDots) {
+            let leftItemCount = 3 + 2 * siblingCount;
+            let leftRange = this.range(1, leftItemCount);
+
+            return [...leftRange, DOTS, totalPageCount];
+        }
+
+        if (shouldShowLeftDots && !shouldShowRightDots) {
+            let rightItemCount = 3 + 2 * siblingCount;
+            let rightRange = this.range(
+                totalPageCount - rightItemCount + 1,
+                totalPageCount
+            );
+            return [firstPageIndex, DOTS, ...rightRange];
+        }
+
+        if (shouldShowLeftDots && shouldShowRightDots) {
+            let middleRange = this.range(leftSiblingIndex, rightSiblingIndex);
+            return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];
+        }
+        return []
+    }
+
     private getPaginationView(currentPage: number, totalPage: number, itemPerPage: number) {
         if (totalPage <= 1) {
             return ""
         }
-        let paginationItems = this.getPaginationMatrix(currentPage, totalPage)
+
+        let paginationItems = this.calculatePagination()
         const _this = this
         return (
             <React.Fragment>
@@ -173,7 +198,7 @@ export default class Pagination extends PaginationSpec<Props, State> {
                 </div>
                 <div className="col-auto">
                     <nav>
-                        <ul className="pagination">
+                        <ul className="pagination pagination-sm">
                             {this.getPrevButton(currentPage)}
                             {this.getPageNumber(paginationItems, currentPage)}
                             {this.getNextButton(currentPage, totalPage)}
