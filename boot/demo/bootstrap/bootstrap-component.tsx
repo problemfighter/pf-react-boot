@@ -7,6 +7,8 @@ import Button from "../../react/Button";
 import Toast from "../../react/Toast";
 import LoadingIndicator from "../../react/LoadingIndicator";
 import Dropdown from "../../react/Dropdown";
+import Accordion from "../../react/Accordion";
+import {AccordionItem} from "@pfo/pf-boot-spec/boot/spec/AccordionSpec";
 
 class State {
     isOpenToast: boolean = false
@@ -19,11 +21,35 @@ export default class BootstrapComponent extends PFBSReactComponent<any, State> {
 
 
     render() {
+        let accordionItem: Array<AccordionItem> = [
+            {
+                header: {content: "Header 1"},
+                body: {content: "Body 1"},
+                isOpen: true
+            },
+            {
+                header: {content: "Header 2"},
+                body: {content: "Body 2"},
+                isOpen: true
+            },
+            {
+                header: {content: "Header 3"},
+                body: {content: "Body 3"}
+            }
+        ]
         return (
             <Container>
                 <h3>In the name of God, the Most Gracious, the Most Merciful.</h3>
 
-                <br/>
+                <br/><br/>
+                <h2>Accordion </h2>
+                <Accordion items={accordionItem} />
+
+                <br/><br/>
+                <h2>Accordion 2 </h2>
+                <Accordion items={accordionItem} isSingleExpand={false}/>
+
+                <br/><br/>
                 <h2>Dropdown Example</h2>
                 <Dropdown itemList={["Item 1", "Item 2"]} wrapperPlaceholder={<Button>Dropdown</Button>}/>
 
