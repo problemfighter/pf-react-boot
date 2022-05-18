@@ -1,4 +1,3 @@
-import RowSpec, {RowProps} from "@pfo/pf-boot-spec/boot/spec/RowSpec";
 import {PFUIState} from "@pfo/pf-boot-spec/boot/spec/common/spec-common-things";
 import CommonUtil from "@pfo/pf-boot-spec/boot/spec/common/common-util";
 import AccordionSpec, {AccordionProps} from "@pfo/pf-boot-spec/boot/spec/AccordionSpec";
@@ -33,7 +32,7 @@ export default class Accordion extends AccordionSpec<Props, State> {
             bodyAttr = {"data-bs-parent": "#" + singleExpandId}
         }
         return (
-            <div
+            <div key={"key" + randomId}
                 {...CommonUtil.addId(_props, singleExpandId)}
                  className={CommonUtil.addClassName(_props, defaultClass)}>
                 {_props.items.map((accordion: any, index: any) => (
