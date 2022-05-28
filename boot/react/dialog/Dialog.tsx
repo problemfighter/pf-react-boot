@@ -63,6 +63,8 @@ export default class Dialog extends DialogSpec<Props, State> {
                 return "modal-lg"
             case "ExtraLarge":
                 return "modal-xl"
+            case "Fullscreen":
+                return "modal-fullscreen"
             default:
                 return ""
         }
