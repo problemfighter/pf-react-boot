@@ -54,13 +54,28 @@ export default class Dialog extends DialogSpec<Props, State> {
         return this.props.header
     }
 
+    getDialogBoxSize() {
+        let type = String(this.props.boxSize)
+        switch (type) {
+            case "Small":
+                return "modal-sm"
+            case "Large":
+                return "modal-lg"
+            case "ExtraLarge":
+                return "modal-xl"
+            default:
+                return ""
+        }
+    }
+
     render() {
         const _props = this.props;
         const _this = this;
+        let className = "modal-dialog modal-dialog-centered " + _this.getDialogBoxSize()
         return (
             (!_this.state.isShowModal ? "" :
                 <div className="modal fade show" style={style.displayBlock}>
-                    <div className="modal-dialog modal-sm modal-dialog-centered">
+                    <div className={className.trim()}>
                         <div className="modal-content">
                             {_this.getHeader()}
                             {_props.children}
