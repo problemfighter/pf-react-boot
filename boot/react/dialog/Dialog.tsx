@@ -1,5 +1,6 @@
 import DialogSpec, {DialogProps} from "@pfo/pf-boot-spec/boot/spec/dialog/DialogSpec";
 import {PFUIState} from "@pfo/pf-boot-spec/boot/spec/common/spec-common-things";
+import CommonUtil from "@pfo/pf-boot-spec/boot/spec/common/common-util";
 
 const style = {
     displayBlock: {
@@ -45,7 +46,7 @@ export default class Dialog extends DialogSpec<Props, State> {
         const _this = this;
         if (!this.props.header){
             return (
-                <div className="modal-header" style={style.defaultTitle}>
+                <div className={CommonUtil.concatAttr("modal-header", _this.props.headerClassName)} style={style.defaultTitle}>
                     <h5 className="modal-title" >{_this.props.title}</h5>
                     <button onClick={()=>{_this.closeDialog()}} type="button" className="btn-close"/>
                 </div>
@@ -76,9 +77,9 @@ export default class Dialog extends DialogSpec<Props, State> {
         let className = "modal-dialog modal-dialog-centered " + _this.getDialogBoxSize()
         return (
             (!_this.state.isShowModal ? "" :
-                <div className="modal fade show" style={style.displayBlock}>
+                <div className={CommonUtil.concatAttr("modal fade show", _props.className)} style={style.displayBlock}>
                     <div className={className.trim()}>
-                        <div className="modal-content">
+                        <div className={CommonUtil.concatAttr("modal-content", _props.containerClassName)}>
                             {_this.getHeader()}
                             {_props.children}
                         </div>
