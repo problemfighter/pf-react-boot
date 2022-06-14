@@ -41,13 +41,13 @@ export class InputViewHelper {
         return response
     }
 
-    public static addValidationClass(props: any, klass = "") {
+    public static addValidationClass(props: any, klass = "", errorKlass = "", validKlass = "") {
         if (props.error) {
-            klass += " is-invalid"
+            klass += " is-invalid " + errorKlass
         } else if (props.wasValidated) {
-            klass += " is-valid"
+            klass += " is-valid " + validKlass
         }
-        return klass
+        return klass.trim()
     }
 
     public static getClass(klass: any, defaultValue: string = "") {
@@ -64,5 +64,4 @@ export class InputViewHelper {
         wrapperClass = this.concatClass(wrapperClass, addWrapperClass)
         return this.concatClass(wrapperClass, klass)
     }
-
 }
