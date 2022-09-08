@@ -1,34 +1,34 @@
 import ReactSelect from "react-select";
 import React from "react";
 import {InputViewHelper} from "./common/input-view-helper";
-import SelectSpec, {SelectProps} from "@pfo/pf-boot-spec/boot/spec/SelectSpec";
+import SelectSpec, {SelectProps as SelectPropsSpec} from "@pfo/pf-boot-spec/boot/spec/SelectSpec";
 import {PFUIState} from "@pfo/pf-boot-spec/boot/spec/common/spec-common-things";
 
-interface Props extends SelectProps {
+export interface SelectProps extends SelectPropsSpec {
     wrapperClass?: string
     addWrapperClass?: string
 }
 
-class State implements PFUIState {
+export class SelectState implements PFUIState {
     value: any = null;
     options: any = [];
 }
 
-interface OptionType {
+export interface OptionType {
     label: string;
     value: string;
 }
 
-export default class Select extends SelectSpec<Props, State> {
+export default class Select extends SelectSpec<SelectProps, SelectState> {
 
-    state: State = new State();
+    state: SelectState = new SelectState();
 
     static defaultProps = {
         wrapperClass: "mb-3",
         isSearchable: true
     }
 
-    constructor(props: Props) {
+    constructor(props: SelectProps) {
         super(props);
     }
 
@@ -46,14 +46,14 @@ export default class Select extends SelectSpec<Props, State> {
         }
     }
 
-    componentDidUpdate(prevProps: Props) {
+    componentDidUpdate(prevProps: SelectProps) {
         if (prevProps.options !== this.props.options || prevProps.value !== this.props.value){
             this.loadOption();
         }
     }
 
 
-    listToOptionType(props: Props) {
+    listToOptionType(props: SelectProps) {
         let optionData: { [key: string]: any } = {};
         optionData.options = [];
         optionData.selected = null;
