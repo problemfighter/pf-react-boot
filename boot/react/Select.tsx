@@ -15,10 +15,6 @@ export class SelectState implements PFUIState {
     options: any = [];
 }
 
-export interface OptionType {
-    label: string;
-    value: string;
-}
 
 export default class Select extends SelectSpec<SelectProps, SelectState> {
 
@@ -34,22 +30,12 @@ export default class Select extends SelectSpec<SelectProps, SelectState> {
     }
 
     componentDidMount() {
-        this.loadOption();
-    }
-
-    loadOption() {
-        let optionData = SelectCommon.listToOptionType(this.props);
-        if (optionData) {
-            this.setState({
-                value: optionData.selected,
-                options: optionData.options,
-            })
-        }
+        SelectCommon.loadOption(this);
     }
 
     componentDidUpdate(prevProps: SelectProps) {
         if (prevProps.options !== this.props.options || prevProps.value !== this.props.value) {
-            this.loadOption();
+            SelectCommon.loadOption(this);
         }
     }
 

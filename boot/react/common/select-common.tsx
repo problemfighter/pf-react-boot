@@ -1,11 +1,29 @@
-import {OptionType, SelectProps} from "../Select";
 import {InputViewHelper} from "./input-view-helper";
 import React from "react";
+
+export interface OptionType {
+    label: string;
+    value: string;
+    rawData: any;
+}
 
 export default class SelectCommon {
 
 
-    public static listToOptionType(props: SelectProps) {
+    public static loadOption(component: any, props: any = undefined) {
+        if (!props) {
+            props = component.props
+        }
+        let optionData = this.listToOptionType(props);
+        if (optionData) {
+            component.setState({
+                value: optionData.selected,
+                options: optionData.options,
+            })
+        }
+    }
+
+    public static listToOptionType(props: any) {
         let optionData: { [key: string]: any } = {};
         optionData.options = [];
         optionData.selected = null;
@@ -15,8 +33,8 @@ export default class SelectCommon {
             if (props.value instanceof Array) {
                 optionData.selected = []
             }
-            props.options.map(item => {
-                    items.push({value: item[props.optionValue], label: item[props.optionLabel]})
+            props.options.map((item: any) => {
+                    items.push({value: item[props.optionValue], label: item[props.optionLabel], rawData: item})
                     if (props.value && props.value === item[props.optionValue]) {
                         optionData.selected = {value: item[props.optionValue], label: item[props.optionLabel]}
                     } else if (props.value instanceof Array) {
