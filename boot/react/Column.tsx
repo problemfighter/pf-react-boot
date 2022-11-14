@@ -46,7 +46,7 @@ export default class Column extends ColumnSpec<Props, State> {
 
     render() {
         const _props = this.props;
-        return (<div {...CommonUtil.addId(_props)} className={CommonUtil.addClassName(_props, this.getSpan())}>{_props.children}</div>);
+        return (<div {...CommonUtil.addEventProps(_props)} {...CommonUtil.addId(_props)} className={CommonUtil.addClassName(_props, this.getSpan())}>{_props.children}</div>);
     }
 
 }
